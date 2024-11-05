@@ -35,6 +35,7 @@ class Trainer():
         
         self.logger.info('Train args:')
         self.logger.info(vars(args))
+        self.logger.info(f"Device: {self.device}")
         self.logger.info(f"Logs directory: {self.exp_path}")
         
         
