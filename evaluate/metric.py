@@ -33,7 +33,6 @@ def cal_metric(pred_phys: np.ndarray, label_phys: np.ndarray,
             ret.append((np.abs((pred_phys - label_phys) / label_phys)).mean() * 100)
         elif m == "R":  
             temp = np.corrcoef(pred_phys, label_phys)
-            print('Pearson:\n', temp)
             if np.isnan(temp).any() or np.isinf(temp).any():
                 ret.append(-1)
             else:

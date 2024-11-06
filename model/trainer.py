@@ -150,7 +150,7 @@ class Trainer():
             saved_data['fs'] = self.args.Fs
 
             # 创建输出路径
-            output_path = os.path.join(self.exp_path, 'test_results.pkl')
+            output_path = os.path.join(self.exp_path, 'test_output_results.pkl')
             with open(output_path, 'wb') as handle:
                 pickle.dump(saved_data, handle, protocol=pickle.HIGHEST_PROTOCOL)
             

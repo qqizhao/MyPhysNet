@@ -18,18 +18,27 @@ from data_process.utils import *
 
 
 class MyDataset(Dataset):
-    def __init__(self, args):
+    def __init__(self, args,data_dirs=None, mode='train'):
         super(MyDataset, self).__init__()
         
+        self.mode = mode
         self.args = args
-        self.raw_dataset_path = args.path['raw_dataset_path']
+
+        self.data_dirs = data_dirs
         self.processed_data_path = args.path['processed_data_path']
         self.file_list_path = args.path['file_list_path']
+         
+        # 如果mode是train，则processed_data_path中加入/train
+        if mode == 'train':
+            self.processed_data_path = self.processed_data_path + '/train'
+            self.file_list_path = args.path['file_list_path'].replace('file_list', 'file_list_train')
+        else:
+            self.processed_data_path = self.processed_data_path + '/test'
+            self.file_list_path = args.path['file_list_path'].replace('file_list', 'file_list_test')
+                   
         self.dataset_name = args.dataset_name
-        
         self.config_preprocess = args.config_preprocess
         
-        # 通过名称得到日志logger
         self.logger = logging.getLogger('MyLogger')
         
         # npy 文件路径
@@ -83,9 +92,9 @@ class MyDataset(Dataset):
     
     def data_process(self):
         
-        data_dirs = get_raw_data(self.raw_dataset_path)
-        data_dirs = split_raw_data(data_dirs, self.args.begin, self.args.end)
+        data_dirs = self.data_dirs
         num_files = len(data_dirs)
+
         progress_bar = tqdm(list(range(num_files)))
     
         file_list = []

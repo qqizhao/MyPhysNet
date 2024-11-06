@@ -56,8 +56,8 @@ def face_detection(frame, backend, use_larger_box=False, larger_box_coef=1.0):
     """single frame face detection"""
     # use OpenCV's Haar cascade to detect face
     if backend == 'HC':
-        detector = cv2.CascadeClassifier(
-            '/home/robo/zhao_code/rPPG/MyPhysNet/data_process/haarcascade_frontalface_default.xml')
+        cascade_path = os.path.join(os.path.dirname(__file__), 'haarcascade_frontalface_default.xml')
+        detector = cv2.CascadeClassifier(cascade_path)
         # face_zone [x, y, w, h]
         face_zone = detector.detectMultiScale(frame)
         # if no face detected, return None
@@ -140,20 +140,27 @@ def get_raw_data(raw_data_path):
             'subject(\d+)', data_dir).group(0), "path": data_dir} for data_dir in data_dirs]
         return dirs
 
-def split_raw_data(data_dirs, begin, end):
-        """split data"""
-        if begin == 0 and end == 1:  # return the full directory if begin == 0 and end == 1
-            return data_dirs
+def split_raw_data(data_dirs, split_ratio, random_seed=42):
+        """随机分割数据"""
+        if split_ratio == 1:
+            return data_dirs, None
+    
+        # 设置随机种子
+        if random_seed is not None:
+            np.random.seed(random_seed)
         
-        file_num = len(data_dirs)
-        # begin：0   end：0.8
-        choose_range = range(int(begin * file_num), int(end * file_num))
-        data_dirs_new = []
-
-        for i in choose_range:
-            data_dirs_new.append(data_dirs[i])
-        # return train data
-        return data_dirs_new
+        # 随机打乱索引
+        indices = np.random.permutation(len(data_dirs))
+        split_point = int(split_ratio * len(data_dirs))
+        
+        # 使用随机索引分割数据
+        train_indices = indices[:split_point]
+        test_indices = indices[split_point:]
+        
+        train_dirs = [data_dirs[i] for i in train_indices]
+        test_dirs = [data_dirs[i] for i in test_indices]
+        
+        return train_dirs, test_dirs
 
 
 def read_video(video_file):

@@ -8,11 +8,10 @@ class PreprocessArgs():
         }
         
         self.dataset_name = 'UBFC-rPPG'
-        self.do_preprocess = False
-        # self.do_preprocess = True
+        # self.do_preprocess = False
+        self.do_preprocess = True      # if True, preprocess the data
         
-        self.BEGIN = 0.0
-        self.END = 0.8
+        self.split_ratio = 1
         
         self.config_preprocess = {
             'Crop_Face': {
@@ -30,8 +29,8 @@ class PreprocessArgs():
                 'W': 128,
                 'H': 128,
             },
-            'Data_Type': ['Raw',],   # 有什么用  Standardized  DiffNormalized
-            'Label_Type': 'Raw',     # Standardized  DiffNormalized
+            'Data_Type': ['Raw',],   # ['Standardized', 'DiffNormalized']
+            'Label_Type': 'Raw',     # ['Standardized', 'DiffNormalized']
             'Chunk_Length': 128,
             'Do_Chunk': True,
         }
