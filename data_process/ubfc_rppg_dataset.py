@@ -102,14 +102,14 @@ class MyDataset(Dataset):
             file_path = data_dirs[i]['path']
             progress_bar.set_description(f"Processing {file_path}")
             frames = read_video(file_path)
-            self.logger.info('process file_path: ' + file_path)
+            self.logger.info('Processing file_path: ' + file_path)
             bvp = read_wave(file_path)
-            self.logger.info('read_video.shape: ' + str(frames.shape))
-            self.logger.info('read_wave.shape: ' + str(bvp.shape))
+            self.logger.info('Read_video.shape: ' + str(frames.shape))
+            self.logger.info('Read_wave.shape: ' + str(bvp.shape))
             # preprocess
             frames_clips, bvps_clips = preprocess(frames, bvp, self.config_preprocess)
-            self.logger.info('preprocessed_frames_clips.shape: ' + str(frames_clips.shape))
-            self.logger.info('preprocessed_bvps_clips.shape: ' + str(bvps_clips.shape))
+            self.logger.info('Preprocessed_frames_clips.shape: ' + str(frames_clips.shape))
+            self.logger.info('Preprocessed_bvps_clips.shape: ' + str(bvps_clips.shape))
             file_list += self.save(frames_clips, bvps_clips, data_dirs[i]['index'])
         file_list = pd.DataFrame(file_list, columns=['input_files'])
         
