@@ -29,8 +29,8 @@ class PreprocessArgs():
                 'W': 128,
                 'H': 128,
             },
-            'Data_Type': ['Raw',],   # ['Standardized', 'DiffNormalized']
-            'Label_Type': 'Raw',     # ['Standardized', 'DiffNormalized']
+            'Data_Type': ['DiffNormalized',],   # if use physnet, should be ['DiffNormalized']
+            'Label_Type': 'DiffNormalized',     
             'Chunk_Length': 128,
             'Do_Chunk': True,
         }
