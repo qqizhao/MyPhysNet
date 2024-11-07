@@ -66,14 +66,17 @@ def get_max_exp(dir):
     return max_exp_dir
 
 def get_latest_checkpoint(exp_dir):
-    
-    # 获取所有.pth文件
     checkpoints = [f for f in os.listdir(exp_dir) if f.endswith('.pth')]
     if not checkpoints:
         return None
-        
-    # 按文件名排序并返回最后一个
-    latest_checkpoint = sorted(checkpoints)[-1]
+    
+    def get_number(filename):
+        nums = ''.join(c for c in filename if c.isdigit())
+        print('nums:', nums)
+        return int(nums) if nums else 0
+    
+    # 按文件名中的数字排序并返回最大的
+    latest_checkpoint = sorted(checkpoints, key=get_number)[-1]
     return os.path.join(exp_dir, latest_checkpoint)
 
 
