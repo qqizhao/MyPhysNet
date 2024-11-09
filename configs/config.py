@@ -8,8 +8,8 @@ class PreprocessArgs():
         }
         
         self.dataset_name = 'UBFC-rPPG'
-        # self.do_preprocess = False
-        self.do_preprocess = True      # if True, preprocess the data
+        self.do_preprocess = False
+        # self.do_preprocess = True      # if True, preprocess the data
         
         self.split_ratio = 1
         
@@ -44,18 +44,18 @@ class TrainArgs():
         
         self.epochs =1
         self.lr = 1e-3
-        self.batch_size = 6
+        self.batch_size = 2
         
         self.logs_path = './logs'
         self.checkpoints_path = './checkpoints'
         self.freq_save_model = 1
         
         # test config
-        self.post = 'fft'
-        self.diff_flag = True
+        self.diff_flag = True         
         self.detrend_flag = True
+        self.use_bandpass = True
+        self.post_hr_method = 'FFT'   # 'Peak'
         self.Fs = 30
-        self.trans = None
         
         self.preprocess_data_type = 'DiffNormalized'
         self.preprocess_label_type = 'DiffNormalized'
