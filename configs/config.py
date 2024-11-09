@@ -52,10 +52,10 @@ class TrainArgs():
         
         # test config
         self.post = 'fft'
-        self.diff = True
-        self.detrend = True
+        self.diff_flag = True
+        self.detrend_flag = True
         self.Fs = 30
         self.trans = None
         
-        self.preprocess_data_type = 'Raw'
-        self.preprocess_label_type = 'Raw'
+        self.preprocess_data_type = 'DiffNormalized'
+        self.preprocess_label_type = 'DiffNormalized'

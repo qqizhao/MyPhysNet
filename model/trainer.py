@@ -135,11 +135,11 @@ class Trainer():
                 if self.args.post == 'fft':
                     # 对预测值和真实值进行FFT处理,提取生理信号,返回的是视频对应的脉搏值
                     pred_temp = postprocess.fft_physiology(pred_temp, Fs=float(self.args.Fs),
-                                                   diff=self.args.diff,
-                                                   detrend_flag=self.args.detrend).reshape(-1)
+                                                   diff=self.args.diff_flag,
+                                                   detrend_flag=self.args.detrend_flag).reshape(-1)
                     label_temp = postprocess.fft_physiology(label_temp, Fs=float(self.args.Fs),
-                                                    diff=self.args.diff,
-                                                    detrend_flag=self.args.detrend).reshape(-1)
+                                                    diff=self.args.diff_flag,
+                                                    detrend_flag=self.args.detrend_flag).reshape(-1)
                 pred_phys.append(pred_temp)
                 label_phys.append(label_temp)
                 
