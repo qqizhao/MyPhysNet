@@ -124,24 +124,21 @@ class Trainer():
             progress_bar.close()
 
             # 合并所有clips并进行后处理
-            pred_phys = []
-            label_phys = []
+            predictions_HR = []
+            labels_HR = []
             self.logger.info('Merging clips...')
             for file_name in predictions.keys():
                 # 合并同一文件的所有chunks
-                pred_temp = merge_clips(predictions[file_name])
-                label_temp = merge_clips(labels[file_name])
-                # 如果使用FFT后处理
-                if self.args.post == 'fft':
-                    # 对预测值和真实值进行FFT处理,提取生理信号,返回的是视频对应的脉搏值
-                    pred_temp = postprocess.fft_physiology(pred_temp, Fs=float(self.args.Fs),
-                                                   diff=self.args.diff_flag,
-                                                   detrend_flag=self.args.detrend_flag).reshape(-1)
-                    label_temp = postprocess.fft_physiology(label_temp, Fs=float(self.args.Fs),
-                                                    diff=self.args.diff_flag,
-                                                    detrend_flag=self.args.detrend_flag).reshape(-1)
-                pred_phys.append(pred_temp)
-                label_phys.append(label_temp)
+                merged_pred_temp = merge_clips(predictions[file_name])
+                merged_label_temp = merge_clips(labels[file_name])
+
+                pred_HR, label_HR = postprocess.calculate_HR(merged_pred_temp, merged_label_temp, 
+                                                                 fs=float(self.args.Fs),
+                                                                 diff_flag=self.args.diff_flag,
+                                                                 use_bandpass=True,
+                                                                 hr_method=self.args.post_hr_method)
+                predictions_HR.append(pred_HR)
+                labels_HR.append(label_HR)
                 
             saved_data = dict()
             saved_data['predictions'] = predictions
@@ -157,7 +154,9 @@ class Trainer():
             self.logger.info(f'Test results saved to: {output_path}')
             
             self.logger.info('Calculating metrics...')
-            metrics = metric.cal_metric(pred_phys, label_phys)
+            self.logger.info(f"Predictions_HR: {predictions_HR}")
+            self.logger.info(f"Labels_HR: {labels_HR}")
+            metrics = metric.cal_metric(predictions_HR, labels_HR)
             
             self.logger.info(f"Test result -> MAE: {metrics[0]:.4f}, MSE: {metrics[1]:.4f}, RMSE: {metrics[2]:.4f}, Pearson: {metrics[3]:.4f}")
             end_time = time.time()
