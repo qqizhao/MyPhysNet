@@ -6,6 +6,7 @@ This is a partially unofficial reimplementation of [PhysNet](https://arxiv.org/a
 
 1. Install dependencies
 ```bash
+bash setup.sh
 pip install -r requirements.txt
 ```
 
