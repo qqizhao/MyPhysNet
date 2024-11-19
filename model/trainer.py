@@ -154,8 +154,11 @@ class Trainer():
             self.logger.info(f'Test results saved to: {output_path}')
             
             self.logger.info('Calculating metrics...')
+            predictions_HR = [p.item() for p in predictions_HR]
+            labels_HR = [l.item() for l in labels_HR]
             self.logger.info(f"Predictions_HR: {predictions_HR}")
             self.logger.info(f"Labels_HR: {labels_HR}")
+
             metrics = metric.cal_metric(predictions_HR, labels_HR)
             
             self.logger.info(f"Test result -> MAE: {metrics[0]:.4f}, MSE: {metrics[1]:.4f}, RMSE: {metrics[2]:.4f}, Pearson: {metrics[3]:.4f}")

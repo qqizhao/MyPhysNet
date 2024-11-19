@@ -20,9 +20,7 @@ def cal_metric(pred_phys: np.ndarray, label_phys: np.ndarray,
     if methods is None:
         methods = ["MAE", "RMSE", "MAPE", "R"]
     pred_phys = pred_phys.reshape(-1)  # 展平为一维数组
-    print('pred_phys: ', pred_phys)
     label_phys = label_phys.reshape(-1)
-    print('label_phys: ', label_phys)
     ret = [] * len(methods)
     for m in methods:
         if m == "MAE":  

@@ -72,7 +72,6 @@ def get_latest_checkpoint(exp_dir):
     
     def get_number(filename):
         nums = ''.join(c for c in filename if c.isdigit())
-        print('nums:', nums)
         return int(nums) if nums else 0
     
     # 按文件名中的数字排序并返回最大的
