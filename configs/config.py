@@ -2,17 +2,10 @@ class PreprocessArgs():
     def __init__(self):
         
         self.path = {
-            'raw_dataset_path': '/home/robo/zhao_code/rPPG/MyPhysNet/dataset',
-            'processed_data_path': '/home/robo/zhao_code/rPPG/MyPhysNet/processed_data/UBFC-rPPG',
-            'file_list_path': '/home/robo/zhao_code/rPPG/MyPhysNet/processed_data/DataFileList/file_list.csv',
+            'processed_data_path': '/home/robo/zhao_code/rPPG/MyPhysNet/processed_data',
+            'file_list_name': 'file_list.csv',
         }
-        
-        self.dataset_name = 'UBFC-rPPG'
-        self.do_preprocess = False
-        # self.do_preprocess = True      # if True, preprocess the data
-        
-        self.split_ratio = 1
-        
+    
         self.config_preprocess = {
             'Crop_Face': {
                 'Do_Crop_Face': True,
@@ -34,13 +27,36 @@ class PreprocessArgs():
             'Chunk_Length': 128,
             'Do_Chunk': True,
         }
+
+class UBFCArgs(PreprocessArgs):
+    def __init__(self):
+        super(UBFCArgs, self).__init__()
+        
+        self.dataset_name = 'UBFC-rPPG'
+        self.path['raw_dataset_path'] = '/home/robo/zhao_code/rPPG/MyPhysNet/data/UBFC-rPPG'
+        self.split_ratio = 0.5
+        
+        # self.do_preprocess = False
+        self.do_preprocess = True      # if True, preprocess the data
         
         
+class PureArgs(PreprocessArgs):
+    def __init__(self):
+        super(PureArgs, self).__init__()
+        
+        self.dataset_name = 'PURE'
+        self.path['raw_dataset_path'] = '/home/robo/zhao_code/rPPG/MyPhysNet/data/PURE'
+        self.split_ratio = 1
+        
+        # self.do_preprocess = False
+        self.do_preprocess = True      # if True, preprocess the data
+ 
+ 
 class TrainArgs():
     def __init__(self):
         
-        # self.mode = 'train_test'
-        self.mode = 'only_test'
+        self.mode = 'train_test'
+        # self.mode = 'only_test'
         
         self.epochs =1
         self.lr = 1e-3
