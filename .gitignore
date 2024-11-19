@@ -136,7 +136,7 @@ __pycache__/
 */__pycache__/
 **/__pycache__/
 test/
-dataset/
+data/
 processed_data/
 processed_data_all/
 logs/
